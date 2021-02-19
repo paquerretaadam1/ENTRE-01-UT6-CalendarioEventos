@@ -5,7 +5,7 @@ import java.time.format.DateTimeFormatter;
 
 /**
  * Representa a un evento del calendario
- * 
+ * @author Pedro J. Aquerreta
  */
 public class Evento {
     private String nombre;
@@ -24,10 +24,24 @@ public class Evento {
      */                 
     public Evento(String nombre, String fecha, String horaInicio,
     String horaFin) {
-         
+        this.nombre = hacerNombre(nombre);
+        this.fecha = LocalDate.parse(fecha, formateadorFecha);
+        this.horaInicio = LocalTime.parse(horaInicio, formateadorHora);
+        this.horaFin = LocalTime.parse(horaFin, formateadorHora);
     }
 
-   
+    /**
+     * 
+     */
+    private String hacerNombre(String nombre) {
+        nombre = nombre.trim();
+        String[] aFormatear = nombre.split("\\s+");
+        StringBuilder sb = new StringBuilder();
+        for(int i = 0; i < aFormatear.length; i++){
+            sb.append(Character.toUpperCase(aFormatear[i].charAt(0)) + aFormatear[i].substring(1) + " ");
+        }
+        return sb.toString();
+    }
 
     /**
      * accesor para el nombre del evento
@@ -90,7 +104,24 @@ public class Evento {
      * que se obtendrá a partir de la fecha del evento
      */
     public int getDia() {
-        return 0;
+        int resul = 0;
+        switch(getFecha().getDayOfWeek()){
+            case MONDAY: resul = 1;
+            break;
+            case TUESDAY: resul = 2;
+            break;
+            case WEDNESDAY: resul = 3;
+            break;
+            case THURSDAY: resul = 4;
+            break;
+            case FRIDAY: resul = 5;
+            break;
+            case SATURDAY: resul = 6;
+            break;
+            case SUNDAY: resul = 7;
+            break;
+        }
+        return resul;
     }
 
     /**
@@ -98,15 +129,42 @@ public class Evento {
      * que se obtendrá a partir de la fecha del evento
      */
     public Mes getMes() {
-        return null;
+        Mes resul = Mes.ENERO;
+        switch(getFecha().getMonthValue()){
+            case 1: resul = Mes.ENERO;
+            break;
+            case 2: resul = Mes.FEBRERO;
+            break;
+            case 3: resul = Mes.MARZO;
+            break;
+            case 4: resul = Mes.ABRIL;
+            break;
+            case 5: resul = Mes.MAYO;
+            break;
+            case 6: resul = Mes.JUNIO;
+            break;
+            case 7: resul = Mes.JULIO;
+            break;
+            case 8: resul = Mes.AGOSTO;
+            break;
+            case 9: resul = Mes.SEPTIEMBRE;
+            break;
+            case 10: resul = Mes.OCTUBRE;
+            break;
+            case 11: resul = Mes.NOVIEMBRE;
+            break;
+            case 12: resul = Mes.DICIEMBRE;
+            break;
+        }
+        return resul;
     }
 
     /**
      * calcula y devuelve la duración del evento en minutos
      */
     public int getDuracion() {
-        return 0;
-
+        return getHoraFin().getHour() * 60 + getHoraFin().getMinute() - 
+            (getHoraInicio().getHour() * 60 + getHoraInicio().getMinute());
     }
 
     /**
@@ -117,11 +175,12 @@ public class Evento {
      * Pista! usa un objeto LocalDateTime
      */
     public boolean antesDe(Evento otro) {
-        return true;
+        LocalDateTime actual = LocalDateTime.of(this.getFecha(), this.getHoraInicio());
+        LocalDateTime datosOtro = LocalDateTime.of(otro.getFecha(), otro.getHoraInicio());
+        return actual.isBefore(datosOtro) ;
 
     }
 
-  
     /**
      * representación textual del evento  
      */
