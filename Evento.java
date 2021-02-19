@@ -25,9 +25,9 @@ public class Evento {
     public Evento(String nombre, String fecha, String horaInicio,
     String horaFin) {
         this.nombre = hacerNombre(nombre);
-        this.fecha = LocalDate.parse(fecha, formateadorFecha);
-        this.horaInicio = LocalTime.parse(horaInicio, formateadorHora);
-        this.horaFin = LocalTime.parse(horaFin, formateadorHora);
+        this.fecha = LocalDate.parse(fecha.trim(), formateadorFecha);
+        this.horaInicio = LocalTime.parse(horaInicio.trim(), formateadorHora);
+        this.horaFin = LocalTime.parse(horaFin.trim(), formateadorHora);
     }
 
     /**
