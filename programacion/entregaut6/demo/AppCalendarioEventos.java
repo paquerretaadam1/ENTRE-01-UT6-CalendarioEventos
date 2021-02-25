@@ -12,6 +12,7 @@ public class AppCalendarioEventos {
         interfaz.iniciar();
         //javac programacion\entregaut6\demo\AppCalendarioEventos.java
         //java programacion.entregaut6.demo.AppCalendarioEventos
+        //java -jar entregaut6.jar
     }
 
 }
