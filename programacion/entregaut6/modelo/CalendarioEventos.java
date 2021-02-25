@@ -1,3 +1,5 @@
+package programacion.entregaut6.modelo;
+import programacion.entregaut6.io.CalendarioIO;
 import java.util.ArrayList;
 import java.util.TreeMap;
 import java.util.TreeSet;
@@ -62,12 +64,13 @@ public class CalendarioEventos {
         while(i < eventosDelMes.size()){
             if(resul.get(i).antesDe(nuevo)){
                 resul.add(i, nuevo);
-                i = eventosDelMes.size();
+                return resul;
             }
             else{
                 i++;
             }
         }
+        resul.add(i, nuevo);
         return resul;
 
     }
@@ -110,13 +113,17 @@ public class CalendarioEventos {
      */
     public TreeSet<Mes> mesesConMasEventos() {
         TreeSet<Mes> resul = new TreeSet<>();
-        
-        // int i = 0;
-        // while(i < calendario.size()){
-        // if(){
-
-        // }
-        // }
+        int max = 0;
+        Set<Mes> claves = calendario.keySet();
+        for(Mes mes: claves){
+            if(totalEventosEnMes(mes) > max){
+                max = totalEventosEnMes(mes); 
+                resul.clear();
+            }
+            if(totalEventosEnMes(mes) == max){
+                resul.add(mes);
+            }
+        }
         return resul;
     }
 
